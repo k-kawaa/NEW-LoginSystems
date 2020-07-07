@@ -68,7 +68,7 @@ class Main extends PluginBase implements Listener
 
         $name = $sender->getName();
         $ip = $sender->getAddress();
-
+    	$uuid = $sender->getUniqueId();
         switch($label){
 
           case 'register':
@@ -81,6 +81,7 @@ class Main extends PluginBase implements Listener
          		
             $this->config->set($name,$args[0]);
             $this->config2->set($name,$ip);
+            $this->config3->set($name,$uuid);
             $sender->setImmobile(false);
             $sender->sendMessage("§a[LoginSystem]password・その他端末情報を保存し、正常にアカウント登録が完了しました。");
             $this->config->save();
@@ -89,6 +90,27 @@ class Main extends PluginBase implements Listener
             }
 
           case 'login':
+          if ($this->config->exists($name)) 
+          {
+          	if (!isset($args[0])) 
+          	{
+          		$sender->sendMessage("§4ログイン方法:/login password ");
+          	}
+            $pass = $this->config->get($name);
+            if ($pass === ($args[0])) 
+            {
+            	$sender->sendMessage("§a[LoginSystem]password認証に成功しました。情報の変更を行います。");
+            	$this->config2->remove($name);
+            	$this->config3->remove($name);
+            	$this->config2->set($name,$ip);
+            	$this->config3->set($name,$ip);
+            	$this->config->save();
+                $this->config2->save();
+                $this->config3->save();
+
+
+            }
+          }
           
          }
           break;        
@@ -100,7 +122,7 @@ class Main extends PluginBase implements Listener
     {
       $this->config->save();
       $this->config2->save();
-
+      $this->config3->save();
 
     }
 
