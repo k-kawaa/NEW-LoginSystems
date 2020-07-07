@@ -44,12 +44,15 @@ class Main extends PluginBase implements Listener
     	if ($this->config->exists($name)) 
     	{
     		$myip = $this->config2->get($name);
+    		$myuuid = $this->config3->get($name);
 
     		if ($myip === $ip) 
     		{
-                $player->sendMessage("§a[NEWLoginSystem]認証が成功しましたおかえりなさい。");
+                if ($myuuid === $uuid) {
+                	$player->sendMessage("§a[NEW!LoginSystem]認証に成功しました。おかえりなさい!");
+                }
     		}else{
-    			$player->sendMessage("§4[NEWLoginSystem]認証に失敗しました。IPアドレスが変更された可能性がございます。\n/login password でもう一度ログインをお願いいたします。");
+    			$player->sendMessage("§4[NEWLoginSystem]認証に失敗しました。IPアドレスや端末変更された可能性がございます。\n/login password でもう一度ログインをお願いいたします。");
       		    $player->setImmobile();  			
     		}
     	
@@ -88,8 +91,8 @@ class Main extends PluginBase implements Listener
             $this->config2->save();
             return true;
             }
-
-          case 'login':
+          }
+          case "login":
           if ($this->config->exists($name)) 
           {
           	if (!isset($args[0])) 
@@ -103,13 +106,17 @@ class Main extends PluginBase implements Listener
             	$this->config2->remove($name);
             	$this->config3->remove($name);
             	$this->config2->set($name,$ip);
-            	$this->config3->set($name,$ip);
-            	$this->config->save();
+            	$this->config3->set($name,$uuid);
                 $this->config2->save();
                 $this->config3->save();
+      		    $sender->setImmobile(false);  
 
-
+            }else
+            {
+            	$sender->sendMessage("§4[エラー]ログインができませんでした。正しく入力できているかご確認をお願い致します。");
             }
+                      break;   
+
           }
           
          }
@@ -126,4 +133,3 @@ class Main extends PluginBase implements Listener
 
     }
 
-}
