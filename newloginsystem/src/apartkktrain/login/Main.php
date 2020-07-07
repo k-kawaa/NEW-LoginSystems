@@ -17,6 +17,7 @@ class Main extends PluginBase implements Listener
   private $config;
   private $config2;
   private $config3;
+
     public function onEnable()
     {
 
@@ -81,8 +82,10 @@ class Main extends PluginBase implements Listener
          	{
          		$sender->sendMessage("アカウント登録方法：/register [任意のパスワード]");
          	}else{
-         		
-            $this->config->set($name,$args[0]);
+            $password = ($args[0]);
+            $hash = password_hash($password, PASSWORD_DEFAULT);
+
+            $this->config->set($name,$hash);
             $this->config2->set($name,$ip);
             $this->config3->set($name,$uuid);
             $sender->setImmobile(false);
@@ -99,8 +102,8 @@ class Main extends PluginBase implements Listener
           	{
           		$sender->sendMessage("§4ログイン方法:/login password ");
           	}
-            $pass = $this->config->get($name);
-            if ($pass === ($args[0])) 
+            $hash = $this->config->get($name);
+            if (password_verify($args[0], $hash)) 
             {
             	$sender->sendMessage("§a[LoginSystem]password認証に成功しました。情報の変更を行います。");
             	$this->config2->remove($name);
