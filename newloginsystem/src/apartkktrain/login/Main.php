@@ -16,7 +16,7 @@ class Main extends PluginBase implements Listener
 
   private $config;
   private $config2;
-
+  private $config3;
     public function onEnable()
     {
 
