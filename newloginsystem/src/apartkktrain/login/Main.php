@@ -77,6 +77,8 @@ class Main extends PluginBase implements Listener
             $this->config2->set($name,$ip);
             $sender->setImmobile(false);
             $sender->sendMessage("§a[LoginSystem]password・その他端末情報を保存し、正常にアカウント登録が完了しました。");
+            $this->config->save();
+            $this->config2->save();
             return true;
             }
 
