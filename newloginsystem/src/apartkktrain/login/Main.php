@@ -115,9 +115,6 @@ class Main extends PluginBase implements Listener
             {
             	$sender->sendMessage("§4[エラー]ログインができませんでした。正しく入力できているかご確認をお願い致します。");
             }
-                      break;   
-
-          }
           
          }
           break;        
@@ -133,3 +130,4 @@ class Main extends PluginBase implements Listener
 
     }
 
+}
