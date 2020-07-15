@@ -47,11 +47,11 @@ class Main extends PluginBase implements Listener
     		$myip = $this->config2->get($name);
     		$myuuid = $this->config3->get($name);
 
-    		if ($myip === $ip) 
+    		if ($myip === $ip&&$myuuid === $uuid) 
     		{
-                if ($myuuid === $uuid) {
-                	$player->sendMessage("§a[NEW!LoginSystem]認証に成功しました。おかえりなさい!");
-                }
+                
+            $player->sendMessage("§a[NEW!LoginSystem]認証に成功しました。おかえりなさい!");
+                
     		}else{
     			$player->sendMessage("§4[NEWLoginSystem]認証に失敗しました。IPアドレスや端末変更された可能性がございます。\n/login password でもう一度ログインをお願いいたします。");
       		    $player->setImmobile();  			
@@ -92,6 +92,7 @@ class Main extends PluginBase implements Listener
             $sender->sendMessage("§a[LoginSystem]password・その他端末情報を保存し、正常にアカウント登録が完了しました。");
             $this->config->save();
             $this->config2->save();
+            $this->config3->save();
             return true;
             }
           }
