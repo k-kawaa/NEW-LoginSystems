@@ -1,2 +1,2 @@
 # NEW-LoginSystems   
-ろぐいんしすてむ。IPアドレスとUUIDのW認証予定。
+LoginSystem.IPとUUIDのWで認証を行います。
